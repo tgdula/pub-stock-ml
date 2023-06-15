@@ -1,0 +1,52 @@
+experiment_configuration:
+  train:
+    periods: 
+      - from_date: '1997-07-10'
+        to_date: '2001-12-31'
+      # - from_date: '2002-01-01'
+      #   to_date: '2005-12-31'
+      # - from_date: '2006-01-01'
+      #   to_date: '2009-12-31'
+      # - from_date: '2010-01-01'
+      #   to_date: '2013-12-31'
+      # - from_date: '2014-01-01'
+      #   to_date: '2017-12-31'
+      # - from_date: '2018-01-01'
+      #   to_date: '2022-12-31'
+    timeseries_splits: 3
+    models_folder: /Temp/stock-ml/lgbm-pub
+  
+  alpha_model:
+    _target_: qs.custom_alpha_model.CustomAlphaModel
+    top_n: 10
+    max_pos: 0.25
+
+  universe:
+    _target_: qs.custom_dynamic_universe.CustomDynamicUniverse
+    price_threshold_min: 0.7
+    price_threshold_max: 1000.0
+    return_threshold: 0.003
+    sortino_bin_threshold: 3
+  
+  risk_model:
+    _target_: qs.risk_model.CustomRiskModel
+
+  data_source:
+    _target_: qs.data_source.DataSourceWrapper
+
+  experiment:
+    _target_: qs.experiment.Experiment
+    from_date: '2023-01-01'
+    to_date: '2023-06-30'
+    initial_cash: 10000.00
+
+  experiment_kwargs:
+    rebalance: daily
+    no_burn_in_date: true
+    cash_buffer_percentage: 0.05
+    commission_pct: 0.003
+    max_position_percentage: 0.25
+    price_threshold_min: 0.7
+    price_threshold_max: 1000.0
+    return_threshold: 0.0025
+    sortino_bin_threshold: 3

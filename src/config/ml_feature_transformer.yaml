@@ -1,0 +1,30 @@
+defaults:
+  - _self_
+
+ml_feature_transformer:
+  _target_: data.transformer_combined.PipelineTransformer
+  _convert_: object
+  transformers:
+  - _target_: data.transformer.Preprocessor
+    _convert_: object
+  - _target_: data.transformer.DataCleaner
+    price_column: price
+  - _target_: data.transformer.DataImputer
+  - _target_: data.transformer_combined.PipelineTransformer
+    _convert_: object
+    transformers:
+    - _target_: data.transformer.BollingerBands
+    - _target_: data.transformer.Natr
+    - _target_: data.transformer.Ppo
+    - _target_: data.transformer.Mfi
+    # - _target_: data.transformer.Adx  #?
+    # - _target_: data.transformer.Adxr #?
+    # - _target_: data.transformer.Atr  #?
+    #- _target_: data.transformer.Ema #?
+    - _target_: data.transformer.Rsi  # [!] <fine, but not with WillR>
+      timeperiods: [6,12]
+    - _target_: data.transformer.WillR # [!]
+      timeperiods: [6,12]
+    - _target_: data.transformer.RateOfChange
+      related_indicators: ['volume_z_score','price'] # [!]
+    - _target_: data.transformer.LinearRegression

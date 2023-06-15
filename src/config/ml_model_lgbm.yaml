@@ -1,0 +1,15 @@
+defaults:
+  - _self_
+
+ml_model:
+  _target_: models.lgbm.LgbmModel
+  model_name: LGBM
+  label: '' # NOTE: to be set after transformer pipeline
+  categorical_features: []
+  num_boost_round: 25
+  learning_rate: 0.01
+  feature_fraction: 0.95
+  min_data_in_leaf: 100
+  max_depth: 12
+  num_leaves: 1024
+  version_number: 0.0.1.1

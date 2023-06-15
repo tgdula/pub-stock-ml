@@ -1,0 +1,9 @@
+defaults:
+  - _self_
+
+ml_model:
+  _target_: models.lr.LinearRegressionModel
+  model_name: LinearRegression
+  label: '' # NOTE: to be set after transformer pipeline
+  categorical_features: []
+  version_number: 0.0.1.1

@@ -1,0 +1,28 @@
+LGBM_ver0.0.1.1
+
+score: 0.9025708114326666
+metadata:
+{'learning_rate': 0.01, 'num_leaves': 1024, 'feature_fraction': 0.95, 'min_data_in_leaf': 100, 'max_depth': 12}
+
+feature importance:
+dollar_vol_rank       0.000110
+price                 0.000423
+volume_z_score        0.000415
+bb_high               0.189513
+bb_low                0.131996
+natr                  0.001204
+ppo                   0.040244
+mfi                   0.000359
+rsi6                  0.513087
+rsi12                 0.002167
+willr6                0.042372
+willr12               0.002204
+roc_volume_z_score    0.000068
+roc_price             0.057563
+lin_reg               0.006381
+is_consolidation      0.010328
+macd                  0.000512
+boll                  0.000901
+stoch                 0.000151
+hilo3                 0.000002
+dtype: float64

@@ -1,0 +1,16 @@
+﻿# Python: 3.9.6
+hydra-core
+numpy
+pandas
+matplotlib
+lightgbm
+scikit-learn
+pytest
+pytz
+quantstats
+statsmodels
+ta-lib
+torch
+tqdm
+pyaml
+PyPortfolioOpt

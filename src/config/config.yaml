@@ -1,0 +1,41 @@
+defaults:
+  - _self_
+  - logging
+  - experiment
+  - ml_feature_transformer
+  - ml_model_lgbm       # NOTE: either this or the one below (exclusive)
+  #- ml_model_lr        #       comment-out above and uncomment this to activate
+  #                             LinearRegression model instead of LightGBM
+
+allocate:
+  at_date: '' # replaced with today date, or can be overridden with `allocate.at_date='2023-06-06'`
+  fetch_online_prices: true
+  ml_model:
+    folder: /Temp/stock-ml/lgbm
+    name: LGBM_ver0.0.1.1.txt
+
+
+data_source:
+  _target_: data.loader.DataSource
+  data_store_path: /data/stooq/assets.h5
+  price_data_field: pl/prices
+
+
+result_transformer:
+  _target_: data.transformer_combined.ResultTransformer
+  return_lags: [5]
+  number_of_bins: 7
+  outlier_winsorize_quantile: 0.0001
+  transformers:
+  - _target_: data.transformer_ml.MlTransformer
+    _convert_: object
+    ml_model: ml_model
+  - _target_: data.transformer.SortinoTransformer
+  - _target_: data.transformer.StopLossCalculator
+
+
+portfolio_loader:
+  _target_: data.portfolio.WebUrlPortfolioLoader
+  allocation_url: https://docs.google.com/spreadsheets/d/1vbQ4aAhqgI4zXFV4q6aYZPACvAk0DBn271BojUrpn64/export?gid=0&format=csv
+  liquidity_url: https://docs.google.com/spreadsheets/d/1vbQ4aAhqgI4zXFV4q6aYZPACvAk0DBn271BojUrpn64/export?gid=2007593116&format=csv
+  excluded_from_allocation: ['ASBIS','BOWIM','COGNOR','ENTER']
